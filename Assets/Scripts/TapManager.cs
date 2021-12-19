@@ -31,7 +31,7 @@ public class TapManager : MonoBehaviour
         _CurrencyText?.Invoke(TapCounter);
     }
 
-    void OnButtonTap()
+    public void OnButtonTap()
     {
         buttonForTapping.transform.DOShakePosition(0.2f, 2, 4, 80f, false);
 

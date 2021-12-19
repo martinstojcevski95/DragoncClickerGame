@@ -21,7 +21,7 @@ public class DragonsManager : MonoBehaviour
         dragonsCount = 1;
         DragonPrefs.ForEach(item => item.SetActive(false));
         DragonPrefs[0].SetActive(true);
-        test.GetComponent<RectTransform>().DOLocalMoveX(2500f, 0.5f, false);
+       // test.GetComponent<RectTransform>().DOLocalMoveX(2500f, 0.5f, false);
     }
 
 
@@ -34,14 +34,14 @@ public class DragonsManager : MonoBehaviour
 
     public void CycleDragons()
     {
-        DragonPlatformHolder.transform.DOLocalMove(new Vector3(5.51f, 0.78f, 0), 0.4f, false).onComplete += ShowDragon;
+        DragonPlatformHolder.transform.DOLocalMove(new Vector3(1500f, 0.78f, 0), 0.4f, false).onComplete += ShowDragon;
 
    
     }
 
     private void ShowDragon()
     {
-        DragonPlatformHolder.transform.DOLocalMove(new Vector3(0, 0.28f, 0), 0.5f, false);
+        DragonPlatformHolder.transform.DOLocalMove(new Vector3(-146f, 0.28f, 0), 0.5f, false);
         DragonPrefs.ForEach(item => item.SetActive(false));
         DragonPrefs[dragonsCount].SetActive(true);
 
@@ -55,7 +55,7 @@ public class DragonsManager : MonoBehaviour
 
     public void PreviousDragon()
     {
-        DragonPlatformHolder.transform.DOLocalMove(new Vector3(-5.51f, 0.78f, 0), 0.4f, false).onComplete += ShowPrevDragon;
+        DragonPlatformHolder.transform.DOLocalMove(new Vector3(-1900f, 0.78f, 0), 0.4f, false).onComplete += ShowPrevDragon;
 
 
 
@@ -71,7 +71,7 @@ public class DragonsManager : MonoBehaviour
 
     private void ShowPrevDragon()
     {
-        DragonPlatformHolder.transform.DOLocalMove(new Vector3(0, 0.28f, 0), 0.5f, false);
+        DragonPlatformHolder.transform.DOLocalMove(new Vector3(-146f, 0.28f, 0), 0.5f, false);
         DragonPrefs.ForEach(item => item.SetActive(false));
         dragonsCount--;
 
