@@ -20,7 +20,7 @@ public class Egg : MonoBehaviour
 
     private void OnMouseDown()
     {
-        tapManager.TapCounter += (int)eggPointOnTap;
+       // tapManager.TapCounter += (int)eggPointOnTap;
         SpawnFoatingTextOnClick();
     }
 

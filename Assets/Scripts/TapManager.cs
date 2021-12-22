@@ -11,31 +11,41 @@ public class TapManager : MonoBehaviour
 {
 
     int tapCounter;
+    float tapCounterIncrementValue;
+
+
+
     [SerializeField] Canvas tappedText;
 
     [SerializeField] Button buttonForTapping;
 
     public static event Action<int> _CurrencyText;
 
+    MainManager mainManager;
+
     // Start is called before the first frame update
     void Start()
     {
 
         Application.targetFrameRate = 120;
-        buttonForTapping.onClick.AddListener(OnButtonTap);
+        mainManager = (MainManager)FindObjectOfType(typeof(MainManager));
     }
 
+    private void OnEnable()
+    {
+        MainManager._TapGoldIncrement += OnButtonTap;
+    }
 
     public void OnCurrencyEarnedEvent()
     {
-        _CurrencyText?.Invoke(TapCounter);
+      //  _CurrencyText?.Invoke(TapCounter);
     }
 
     public void OnButtonTap()
     {
         buttonForTapping.transform.DOShakePosition(0.2f, 2, 4, 80f, false);
 
-        TapCounter++;
+       // TapCounter++;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Debug.Log(worldPosition);
         var txt = Instantiate(tappedText, new Vector3(worldPosition.x - 1.8f, worldPosition.y, 0), Quaternion.identity);
@@ -44,23 +54,41 @@ public class TapManager : MonoBehaviour
         txt.transform.GetChild(0).GetComponent<TMP_Text>().text = "+1";
         var sprite = txt.transform.GetChild(1).GetComponent<Image>();
         sprite.DOFade(0, 0.6f);
+        if (mainManager != null)
+        {
+            mainManager.Gold += 1;
+        }
 
     }
 
 
-    public int TapCounter
-    {
-        get
-        {
-            return tapCounter;
-        }
-        set
-        {
-            tapCounter = value;
+    //public int TapCounter
+    //{
+    //    get
+    //    {
+    //        return tapCounter;
+    //    }
+    //    set
+    //    {
+    //        tapCounter = value;
 
-            OnCurrencyEarnedEvent();
-            Debug.Log(tapCounter);
-        }
-    }
+    //        OnCurrencyEarnedEvent();
+    //    }
+    //}
 
+    //public float TapCaunterIncrementValue
+    //{
+    //    get
+    //    {
+    //        return tapCounterIncrementValue;
+    //    }
+    //    set
+    //    {
+    //        tapCounterIncrementValue = value;
+    //    }
+
+    //}
+    
+
+   
 }

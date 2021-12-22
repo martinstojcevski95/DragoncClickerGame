@@ -10,90 +10,95 @@ public class UpgradableItem : MonoBehaviour
 {
 
    public enum ItemType
-    {
-        UpgradeCurrency,
-        UpgradePerClick
-        //define item types here
-
+    { 
+        GoldPerTap,
+        PassiveIncome,
+        Multiplier
     }
 
+
+
+    //Item Type for each upgradable item
     public ItemType type;
-    [SerializeField]
     Button UpgradeButton;
-    TapManager tapManager;
-    [SerializeField] Canvas UIupgradeTextCountSpawn;
+    [SerializeField]
+    float incrementValue;
     bool canUpgrade;
-   [SerializeField] float increment;
-    [SerializeField]
-    TMP_Text buttonUpgradeText,buttonCostText;
-    [SerializeField]
-    float upgradeCost;
-    public string ButtonInfo;
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        canUpgrade = true;
-        upgradeCost = 30;
-        UpgradeButton.onClick.AddListener(OnItemUpdate);
-        tapManager = (TapManager)FindObjectOfType(typeof(TapManager));
-
-        //buttonUpgradeText.text = ButtonInfo + " + " + increment;
-        //buttonCostText.text = upgradeCost.ToString();
-
+        InitializeButton();   
     }
 
-    void Test()
+    private void OnEnable()
     {
+        
+    }
+
+   
+    private void OnDisable()
+    {
+        
+    }
+
+    void InitializeButton()
+    {
+        UpgradeButton = GetComponent<Button>();
+        if (UpgradeButton == null) return;
+        UpgradeButton.onClick.AddListener(MainUpgrade);
+        canUpgrade = false;
     }
 
 
 
-    void OnItemUpdate()
+    /// <summary>
+    /// Using to upgrade each button
+    /// </summary>
+    void MainUpgrade()
     {
-        if(canUpgrade)
+        switch(type)
         {
-            InvokeRepeating("GeneratePoint", 0f, 2f);
-            UpgradeButton.onClick.RemoveAllListeners();
-            UpgradeButton.onClick.AddListener(UpgradeOnly);
-            upgradeCost += 250;
-            canUpgrade = false;
+            case ItemType.GoldPerTap:
+                SetGPSUpgrade();
+                break;
+
+            case ItemType.Multiplier:
+                SetMultiplier();
+                break;
+
+            case ItemType.PassiveIncome:
+                SetPassiveIncome();
+                break;
         }
     }
 
 
+    #region Upgrades
 
-    void OnSetUpgradeUI()
+    void SetGPSUpgrade()
     {
-        buttonUpgradeText.text = ButtonInfo + " + " + increment;
-        buttonCostText.text = upgradeCost.ToString();
+    }
+
+    void SetMultiplier()
+    {
+     
+    }
+
+    void SetPassiveIncome()
+    {
+     
     }
 
 
-    void UpgradeOnly()
-    {
-        increment += 2;
-        upgradeCost += 250;
- 
-    }
 
-    void GeneratePoint()
-    {
-        tapManager.TapCounter = tapManager.TapCounter += (int)increment;
-     //   SpawnFoatingTextOnClick();
 
-    }
+    #endregion
 
-    void SpawnFoatingTextOnClick()
-    {
-        var txt = Instantiate(UIupgradeTextCountSpawn, new Vector3(2, -1.24f, 0), Quaternion.identity);
-        txt.transform.GetChild(0).GetComponent<TMP_Text>().text = "+" + increment;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-       // OnSetUpgradeUI();
-    }
+
+
+
+
 }
