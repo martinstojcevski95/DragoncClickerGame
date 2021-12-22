@@ -8,33 +8,19 @@ public class UIManager : MonoBehaviour
 {
 
     [SerializeField]
-    TMP_Text currentInGameCurrencyText;
-    public static UIManager Instance;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
+    TMP_Text currentGoldText;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        MainManager._TapGoldIncrement += UpgradeGoldText;
     }
 
-    private void OnEnable()
+    private void UpgradeGoldText()
     {
-        TapManager._CurrencyText += UpdateCurrencyText;
+        currentGoldText.text = MainManager.Instance.Gold.ToString();
     }
-
-    private void UpdateCurrencyText(int currency)
-    {
-        currentInGameCurrencyText.text = currency.ToString();
-    }
-
-
-
 
     // Update is called once per frame
     void Update()
