@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,24 +6,29 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
 
-    [SerializeField]
-    TMP_Text currentGoldText;
+
+    [SerializeField] private TMP_Text PlayerGoldText;
 
 
-    // Start is called before the first frame update
-    void Start()
+
+    public void SetPlayerGoldUI()
     {
-        MainManager._TapGoldIncrement += UpgradeGoldText;
+        PlayerGoldText.text = FormatNumber((int)GameManager.Instance.PlayerGold);
     }
 
-    private void UpgradeGoldText()
-    {
-        currentGoldText.text = MainManager.Instance.Gold.ToString();
-    }
 
-    // Update is called once per frame
-    void Update()
+    string FormatNumber(int num)
     {
-        
+
+        if (num >= 1000)
+            return FormatNumber(num / 1000) + "K";
+            
+        if (num >= 100000)
+            return FormatNumber(num / 1000) + "K";
+
+        if (num >= 10000)
+            return (num / 1000D).ToString("0.#") + "K";
+
+        return num.ToString("#,0");
     }
 }
